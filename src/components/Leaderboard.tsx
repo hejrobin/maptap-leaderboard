@@ -1,6 +1,9 @@
+import { useState } from "react";
+import { motion } from "motion/react";
 import type { Player } from "../types";
 
 type Trend = "up" | "down" | "flat";
+type Metric = "average" | "total";
 
 interface Row {
   player: Player;
@@ -14,12 +17,14 @@ function computeRow(player: Player): Row {
   const sorted = [...player.scores].sort((a, b) =>
     a.date.localeCompare(b.date),
   );
+  
   const total = sorted.reduce((sum, s) => sum + s.score, 0);
   const average = sorted.length > 0 ? Math.round(total / sorted.length) : 0;
   const latest = sorted.at(-1)?.score ?? 0;
   const previous = sorted.at(-2)?.score ?? latest;
   const delta = latest - previous;
   const trend: Trend = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
+ 
   return { player, total, average, trend, delta };
 }
 
@@ -96,7 +101,8 @@ function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
 }
 
 export function Leaderboard({ players }: { players: Player[] }) {
-  const rows = players.map(computeRow).sort((a, b) => b.total - a.total);
+  const [metric, setMetric] = useState<Metric>("average");
+  const rows = players.map(computeRow).sort((a, b) => b[metric] - a[metric]);
 
   const getTextColor = (index: number) => {
     if (index === 0) {
@@ -138,12 +144,50 @@ export function Leaderboard({ players }: { players: Player[] }) {
     return index + 1;
   };
 
+  const segments: { value: Metric; label: string }[] = [
+    { value: "average", label: "Average" },
+    { value: "total", label: "High score" },
+  ];
+
   return (
-    <ol className="divide-y divide-neutral-700 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-900/50 backdrop-blur">
-      {rows.map((row, index) => (
-        <li
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-end">
+        <div
+          role="tablist"
+          aria-label="Ranking metric"
+          className="inline-flex rounded-full border border-neutral-700 bg-neutral-900/50 p-1"
+        >
+          {segments.map((segment) => {
+            const active = metric === segment.value;
+            return (
+              <button
+                key={segment.value}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setMetric(segment.value)}
+                className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                  active
+                    ? "bg-neutral-700 text-neutral-100"
+                    : "text-neutral-400 hover:text-neutral-200"
+                }`}
+              >
+                {segment.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <ol className="divide-y divide-neutral-700 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-900/50 backdrop-blur">
+        {rows.map((row, index) => {
+          const primary = metric === "average" ? row.average : row.total;
+          const secondary = metric === "average" ? row.total : row.average;
+          return (
+        <motion.li
+          layout
           key={row.player.name}
-          className="flex items-center gap-4 px-4 py-3 transition-colors hover:bg-neutral-800/40"
+          transition={{ type: "spring", stiffness: 500, damping: 40 }}
+          className="flex items-center gap-4 bg-neutral-900/50 px-4 py-3 transition-colors hover:bg-neutral-800/40"
         >
           <span
             className={`w-8 text-center font-mono tabular-nums ${getTextColor(index)} ${getTextSize(index)}`}
@@ -165,26 +209,28 @@ export function Leaderboard({ players }: { players: Player[] }) {
               {row.player.scores.length === 1 ? "round" : "rounds"}
             </p>
           </div>
-          <div className="text-center">
+          <div className="flex flex-center flex-col w-20">
             <span
-              className={`block font-mono text-base font-thin tabular-nums ${getTextColor(index)}`}
+              className={`block text-center font-mono text-lg font-thin tabular-nums ${getTextColor(index)}`}
             >
-              {row.total.toLocaleString()}
+              {primary.toLocaleString()}
             </span>
-            <span className="block font-mono text-xs tabular-nums text-neutral-500">
-              ({row.average.toLocaleString()})
+            <span className="block text-center font-mono text-xs tabular-nums text-neutral-600">
+              ({secondary.toLocaleString()})
             </span>
           </div>
-          <div className="w-24 text-right">
+          <div className="w-18 text-right">
             <TrendBadge trend={row.trend} delta={row.delta} />
           </div>
-        </li>
-      ))}
-      {rows.length === 0 && (
-        <li className="px-4 py-12 text-center text-sm text-neutral-500">
-          No players yet.
-        </li>
-      )}
-    </ol>
+            </motion.li>
+          );
+        })}
+        {rows.length === 0 && (
+          <li className="px-4 py-12 text-center text-sm text-neutral-500">
+            No players yet.
+          </li>
+        )}
+      </ol>
+    </div>
   );
 }
