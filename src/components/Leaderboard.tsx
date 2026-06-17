@@ -5,6 +5,7 @@ type Trend = "up" | "down" | "flat";
 interface Row {
   player: Player;
   total: number;
+  average: number;
   trend: Trend;
   delta: number;
 }
@@ -14,11 +15,12 @@ function computeRow(player: Player): Row {
     a.date.localeCompare(b.date),
   );
   const total = sorted.reduce((sum, s) => sum + s.score, 0);
+  const average = sorted.length > 0 ? Math.round(total / sorted.length) : 0;
   const latest = sorted.at(-1)?.score ?? 0;
   const previous = sorted.at(-2)?.score ?? latest;
   const delta = latest - previous;
   const trend: Trend = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
-  return { player, total, trend, delta };
+  return { player, total, average, trend, delta };
 }
 
 function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
@@ -28,7 +30,59 @@ function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
     flat: "bg-neutral-500/10 text-neutral-400",
   }[trend];
 
-  const arrow = { up: "▲", down: "▼", flat: "—" }[trend];
+  const arrow = {
+    up: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        className="lucide lucide-arrow-up-icon lucide-arrow-up"
+      >
+        <path d="m5 12 7-7 7 7" />
+        <path d="M12 19V5" />
+      </svg>
+    ),
+    down: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        className="lucide lucide-arrow-up-icon lucide-arrow-up"
+      >
+        <path d="M12 5v14" />
+        <path d="m19 12-7 7-7-7" />
+      </svg>
+    ),
+    flat: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        className="lucide lucide-arrow-up-icon lucide-arrow-up"
+      >
+        <path d="M5 12h14"/>
+        <path d="m12 5 7 7-7 7"/>
+      </svg>
+    )
+  }[trend];
   const label = trend === "flat" ? "0" : `${delta > 0 ? "+" : ""}${delta}`;
 
   return (
@@ -111,11 +165,16 @@ export function Leaderboard({ players }: { players: Player[] }) {
               {row.player.scores.length === 1 ? "round" : "rounds"}
             </p>
           </div>
-          <span
-            className={`font-mono text-base font-thin tabular-nums ${getTextColor(index)}`}
-          >
-            {row.total.toLocaleString()}
-          </span>
+          <div className="text-center">
+            <span
+              className={`block font-mono text-base font-thin tabular-nums ${getTextColor(index)}`}
+            >
+              {row.total.toLocaleString()}
+            </span>
+            <span className="block font-mono text-xs tabular-nums text-neutral-500">
+              ({row.average.toLocaleString()})
+            </span>
+          </div>
           <div className="w-24 text-right">
             <TrendBadge trend={row.trend} delta={row.delta} />
           </div>
