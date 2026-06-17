@@ -4,7 +4,13 @@ export const leaderboard: Player[] = [
   {
     name: "Jakob Persson",
     avatarUrl: "/avatars/jacob-persson.jpg",
-    scores: [{ date: "2026-06-16", score: 875 }],
+    scores: [
+      { date: "2026-06-16", score: 875 },
+      {
+        date: "2026-06-17",
+        score: 858,
+      },
+    ],
   },
   {
     name: "Calle Lundqvist",
