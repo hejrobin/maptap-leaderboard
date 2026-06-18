@@ -10,6 +10,7 @@ export const leaderboard: Player[] = [
         date: "2026-06-17",
         score: 858,
       },
+      { date: "2026-06-18", score: 885 },
     ],
   },
   {
@@ -46,6 +47,7 @@ export const leaderboard: Player[] = [
     scores: [
       { date: "2026-06-16", score: 949 },
       { date: "2026-06-17", score: 941 },
+      { date: "2026-06-18", score: 795 },
     ],
   },
   {
@@ -54,6 +56,7 @@ export const leaderboard: Player[] = [
     scores: [
       { date: "2026-06-16", score: 946 },
       { date: "2026-06-17", score: 900 },
+      { date: "2026-06-18", score: 718 },
     ],
   },
   {
@@ -64,16 +67,25 @@ export const leaderboard: Player[] = [
   {
     name: "Aditya Naik",
     avatarUrl: "/avatars/aditya-naik.png",
-    scores: [{ date: "2026-06-17", score: 930 }],
+    scores: [
+      { date: "2026-06-17", score: 930 },
+      { date: "2026-06-18", score: 852 },
+    ],
   },
   {
     name: "Jonathan Strömgren",
     avatarUrl: "/avatars/jonathan-stromgren.jpg",
-    scores: [{ date: "2026-06-17", score: 926 }],
+    scores: [
+      { date: "2026-06-17", score: 926 },
+      { date: "2026-06-18", score: 812 },
+    ],
   },
   {
     name: "Luis Rizo",
     avatarUrl: "/avatars/luis-rizo.jpg",
-    scores: [{ date: "2026-06-17", score: 941 }],
+    scores: [
+      { date: "2026-06-17", score: 941 },
+      { date: "2026-06-18", score: 752 },
+    ],
   },
 ];
