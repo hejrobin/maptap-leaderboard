@@ -1,4 +1,6 @@
+import { PolePosition } from './components/PolePosition';
 import { Leaderboard } from './components/Leaderboard';
+import { LaggingBehind } from './components/LaggingBehind';
 import { leaderboard } from './data';
 
 function App() {
@@ -11,7 +13,9 @@ function App() {
            <strong>Ranked by the selected metric.</strong> Trend compares the latest round to the previous one.
           </p>
         </header>
+        <PolePosition players={leaderboard} />
         <Leaderboard players={leaderboard} />
+        <LaggingBehind players={leaderboard} />
       </main>
     </div>
   );

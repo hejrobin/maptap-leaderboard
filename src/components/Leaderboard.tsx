@@ -102,7 +102,10 @@ function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
 
 export function Leaderboard({ players }: { players: Player[] }) {
   const [metric, setMetric] = useState<Metric>("average");
-  const rows = players.map(computeRow).sort((a, b) => b[metric] - a[metric]);
+  const rows = players
+    .filter((player) => player.scores.length > 1)
+    .map(computeRow)
+    .sort((a, b) => b[metric] - a[metric]);
 
   const getTextColor = (index: number) => {
     if (index === 0) {
