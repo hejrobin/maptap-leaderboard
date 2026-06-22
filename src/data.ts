@@ -71,6 +71,7 @@ export const leaderboard: Player[] = [
     scores: [
       { date: "2026-06-17", score: 930 },
       { date: "2026-06-18", score: 852 },
+      { date: "2026-06-22", score: 812 },
     ],
   },
   {
