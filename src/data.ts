@@ -11,7 +11,8 @@ export const leaderboard: Player[] = [
         score: 858,
       },
       { date: "2026-06-18", score: 885 },
-       { date: "2026-06-22", score: 766 },
+      { date: "2026-06-22", score: 766 },
+      { date: "2026-06-23", score: 859 },
     ],
   },
   {
@@ -42,7 +43,10 @@ export const leaderboard: Player[] = [
   {
     name: "Zak Eklund",
     avatarUrl: "/avatars/zak-eklund.jpg",
-    scores: [{ date: "2026-06-16", score: 776 }, { date: "2026-06-22", score: 765 }],
+    scores: [
+      { date: "2026-06-16", score: 776 },
+      { date: "2026-06-22", score: 765 },
+    ],
   },
   {
     name: "Mattias Nygård",
@@ -63,7 +67,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-17", score: 900 },
       { date: "2026-06-18", score: 718 },
       { date: "2026-06-22", score: 908 },
-      { date: "2026-06-23", score: 892 }
+      { date: "2026-06-23", score: 892 },
     ],
   },
   {
