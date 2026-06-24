@@ -13,6 +13,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-18", score: 885 },
       { date: "2026-06-22", score: 766 },
       { date: "2026-06-23", score: 859 },
+      { date: "2026-06-24", score: 823 },
     ],
   },
   {
@@ -33,12 +34,16 @@ export const leaderboard: Player[] = [
       { date: "2026-06-18", score: 955 },
       { date: "2026-06-22", score: 881 },
       { date: "2026-06-23", score: 893 },
+      { date: "2026-06-24", score: 888 },
     ],
   },
   {
     name: "David Dufberg Töttrup",
     avatarUrl: "/avatars/david-dufberg-tottrup.jpg",
-    scores: [{ date: "2026-06-16", score: 637 }],
+    scores: [
+      { date: "2026-06-16", score: 637 },
+      { date: "2026-06-24", score: 814 },
+    ],
   },
   {
     name: "Zak Eklund",
@@ -46,6 +51,7 @@ export const leaderboard: Player[] = [
     scores: [
       { date: "2026-06-16", score: 776 },
       { date: "2026-06-22", score: 765 },
+      { date: "2026-06-24", score: 824 },
     ],
   },
   {
@@ -68,6 +74,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-18", score: 718 },
       { date: "2026-06-22", score: 908 },
       { date: "2026-06-23", score: 892 },
+      { date: "2026-06-24", score: 822 },
     ],
   },
   {
@@ -83,6 +90,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-18", score: 852 },
       { date: "2026-06-22", score: 812 },
       { date: "2026-06-23", score: 861 },
+      { date: "2026-06-24", score: 816 },
     ],
   },
   {
@@ -93,6 +101,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-18", score: 812 },
       { date: "2026-06-22", score: 904 },
       { date: "2026-06-23", score: 913 },
+      { date: "2026-06-24", score: 969 },
     ],
   },
   {
