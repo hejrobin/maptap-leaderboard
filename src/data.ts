@@ -37,6 +37,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-23", score: 893 },
       { date: "2026-06-24", score: 888 },
       { date: "2026-06-25", score: 818 },
+      { date: "2026-06-26", score: 808 },
     ],
   },
   {
@@ -68,6 +69,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-23", score: 903 },
       { date: "2026-06-24", score: 876 },
       { date: "2026-06-25", score: 722 },
+      { date: "2026-06-26", score: 872 },
     ],
   },
   {
@@ -81,6 +83,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-23", score: 892 },
       { date: "2026-06-24", score: 822 },
       { date: "2026-06-25", score: 764 },
+      { date: "2026-06-26", score: 805 },
     ],
   },
   {
@@ -98,6 +101,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-23", score: 861 },
       { date: "2026-06-24", score: 816 },
       { date: "2026-06-25", score: 682 },
+      { date: "2026-06-26", score: 831 },
     ],
   },
   {
@@ -110,6 +114,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-23", score: 913 },
       { date: "2026-06-24", score: 969 },
       { date: "2026-06-25", score: 637 },
+      { date: "2026-06-26", score: 710 },
     ],
   },
   {
