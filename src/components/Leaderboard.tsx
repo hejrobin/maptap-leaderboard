@@ -4,12 +4,13 @@ import type { Player } from "../types";
 import { isActivePlayer } from "../activity";
 
 type Trend = "up" | "down" | "flat";
-type Metric = "average" | "total";
+type Metric = "average" | "total" | "best";
 
 interface Row {
   player: Player;
   total: number;
   average: number;
+  best: number;
   trend: Trend;
   delta: number;
 }
@@ -18,15 +19,16 @@ function computeRow(player: Player): Row {
   const sorted = [...player.scores].sort((a, b) =>
     a.date.localeCompare(b.date),
   );
-  
+
   const total = sorted.reduce((sum, s) => sum + s.score, 0);
   const average = sorted.length > 0 ? Math.round(total / sorted.length) : 0;
+  const best = sorted.reduce((max, s) => Math.max(max, s.score), 0);
   const latest = sorted.at(-1)?.score ?? 0;
   const previous = sorted.at(-2)?.score ?? latest;
   const delta = latest - previous;
   const trend: Trend = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
- 
-  return { player, total, average, trend, delta };
+
+  return { player, total, average, best, trend, delta };
 }
 
 function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
@@ -103,10 +105,9 @@ function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
 
 export function Leaderboard({ players }: { players: Player[] }) {
   const [metric, setMetric] = useState<Metric>("average");
-  const rows = players
-    .filter((player) => isActivePlayer(player))
-    .map(computeRow)
-    .sort((a, b) => b[metric] - a[metric]);
+  const source =
+    metric === "best" ? players : players.filter((player) => isActivePlayer(player));
+  const rows = source.map(computeRow).sort((a, b) => b[metric] - a[metric]);
 
   const getTextColor = (index: number) => {
     if (index === 0) {
@@ -151,6 +152,7 @@ export function Leaderboard({ players }: { players: Player[] }) {
   const segments: { value: Metric; label: string }[] = [
     { value: "average", label: "Average" },
     { value: "total", label: "High score" },
+    { value: "best", label: "All time high" },
   ];
 
   return (
@@ -184,7 +186,7 @@ export function Leaderboard({ players }: { players: Player[] }) {
       </div>
       <ol className="divide-y divide-neutral-700 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-900/50 backdrop-blur">
         {rows.map((row, index) => {
-          const primary = metric === "average" ? row.average : row.total;
+          const primary = row[metric];
           const secondary = metric === "average" ? row.total : row.average;
           return (
         <motion.li
