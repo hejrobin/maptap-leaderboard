@@ -6,10 +6,7 @@ export const leaderboard: Player[] = [
     avatarUrl: "/avatars/jacob-persson.jpg",
     scores: [
       { date: "2026-06-16", score: 875 },
-      {
-        date: "2026-06-17",
-        score: 858,
-      },
+      { date: "2026-06-17", score: 858 },
       { date: "2026-06-18", score: 885 },
       { date: "2026-06-22", score: 766 },
       { date: "2026-06-23", score: 859 },
@@ -19,6 +16,7 @@ export const leaderboard: Player[] = [
       { date: "2026-06-29", score: 759 },
       { date: "2026-06-30", score: 779 },
       { date: "2026-07-01", score: 777 },
+      { date: "2026-07-02", score: 876 },
     ],
   },
   {
