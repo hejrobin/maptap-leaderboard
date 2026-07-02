@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import type { Player } from "../types";
+import { isActivePlayer } from "../activity";
 
 type Trend = "up" | "down" | "flat";
 type Metric = "average" | "total";
@@ -103,7 +104,7 @@ function TrendBadge({ trend, delta }: { trend: Trend; delta: number }) {
 export function Leaderboard({ players }: { players: Player[] }) {
   const [metric, setMetric] = useState<Metric>("average");
   const rows = players
-    .filter((player) => player.scores.length > 1)
+    .filter((player) => isActivePlayer(player))
     .map(computeRow)
     .sort((a, b) => b[metric] - a[metric]);
 

@@ -151,4 +151,11 @@ export const leaderboard: Player[] = [
       { date: "2026-06-18", score: 752 },
     ],
   },
+  {
+    name: "Elof Rosengren",
+    avatarUrl: "/avatars/elof-rosengren.png",
+    scores: [
+      { date: "2026-07-02", score: 892 },
+    ],
+  },
 ];

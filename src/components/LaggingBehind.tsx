@@ -1,7 +1,8 @@
 import type { Player } from "../types";
+import { isActivePlayer } from "../activity";
 
 export function LaggingBehind({ players }: { players: Player[] }) {
-  const lagging = players.filter((player) => player.scores.length <= 1);
+  const lagging = players.filter((player) => !isActivePlayer(player));
 
   if (lagging.length === 0) {
     return null;
@@ -14,7 +15,7 @@ export function LaggingBehind({ players }: { players: Player[] }) {
           Lagging behind
         </h2>
         <p className="text-xs text-neutral-600">
-          Play at least two rounds to join the leaderboard.
+          Play at least once within the last five days to compete.
         </p>
       </div>
       <ul className="divide-y divide-neutral-800 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/30">
@@ -39,7 +40,7 @@ export function LaggingBehind({ players }: { players: Player[] }) {
               </p>
             </div>
             <span className="font-mono text-lg font-thin tabular-nums text-neutral-500">
-              {(player.scores[0]?.score ?? 0).toLocaleString()}
+              {(player.scores.at(-1)?.score ?? 0).toLocaleString()}
             </span>
           </li>
         ))}
