@@ -107,7 +107,9 @@ export function Leaderboard({ players }: { players: Player[] }) {
   const [metric, setMetric] = useState<Metric>("average");
   const source =
     metric === "best" ? players : players.filter((player) => isActivePlayer(player));
-  const rows = source.map(computeRow).sort((a, b) => b[metric] - a[metric]);
+  // "All time high" ranks by combined total across all rounds.
+  const rankBy = metric === "best" ? "total" : metric;
+  const rows = source.map(computeRow).sort((a, b) => b[rankBy] - a[rankBy]);
 
   const getTextColor = (index: number) => {
     if (index === 0) {
@@ -186,8 +188,13 @@ export function Leaderboard({ players }: { players: Player[] }) {
       </div>
       <ol className="divide-y divide-neutral-700 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-900/50 backdrop-blur">
         {rows.map((row, index) => {
-          const primary = row[metric];
-          const secondary = metric === "average" ? row.total : row.average;
+          const primary = metric === "best" ? row.total : row[metric];
+          const secondary =
+            metric === "average"
+              ? row.total
+              : metric === "total"
+                ? row.average
+                : row.best;
           return (
         <motion.li
           layout
